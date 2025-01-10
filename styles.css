@@ -1,116 +1,139 @@
+/* styles.css */
+
+/* General Styles */
 body {
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Arial', sans-serif;
   margin: 0;
-  background-color: #121212;
-  color: #ffffff;
-  display: flex;
-  height: 100vh;
+  padding: 0;
+  background-color: #f7f7f7;
 }
 
-#login-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #1db954;
+.screen {
+  display: none;
+  padding: 20px;
 }
 
-#login-screen h1 {
+.hidden {
+  display: none;
+}
+
+header, main {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+h1, h2 {
+  text-align: center;
   font-size: 2rem;
-  margin-bottom: 20px;
+  margin: 20px 0;
+}
+
+/* Login Screen Styles */
+#login-screen {
+  display: block;
+  text-align: center;
+  padding: 50px;
 }
 
 #login-button {
-  padding: 10px 20px;
-  font-size: 1rem;
+  background-color: #1DB954;
   border: none;
-  border-radius: 50px;
-  color: #fff;
-  background-color: #191414;
-  cursor: pointer;
-}
-
-.sidebar {
-  width: 250px;
-  background-color: #191414;
-  padding: 20px;
-  overflow-y: auto;
-}
-
-.sidebar h2 {
-  font-size: 1.5rem;
-  margin-bottom: 20px;
-}
-
-.playlist-list div {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-radius: 5px;
+  color: white;
+  font-size: 1.2rem;
+  padding: 15px 30px;
+  border-radius: 30px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.playlist-list div:hover {
+#login-button:hover {
+  background-color: #1ed760;
+}
+
+/* Sidebar Styles */
+.sidebar {
   background-color: #282828;
-}
-
-.playlist-list img {
-  width: 50px;
-  height: 50px;
-  margin-right: 10px;
-  border-radius: 5px;
-}
-
-.main-content {
-  flex-grow: 1;
+  color: white;
   padding: 20px;
+  width: 250px;
+  float: left;
+}
+
+.playlist-list {
+  max-height: 500px;
   overflow-y: auto;
+}
+
+.playlist-item {
+  cursor: pointer;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+
+.playlist-item:hover {
+  background-color: #1DB954;
+}
+
+/* Main Content Styles */
+.main-content {
+  margin-left: 270px;
+  padding: 20px;
 }
 
 .playlist-header {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   margin-bottom: 20px;
 }
 
-#playlist-cover {
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
-  border-radius: 5px;
-}
-
-#playlist-name {
-  font-size: 1.5rem;
+.playlist-cover-img {
+  height: 80px;
+  width: 80px;
+  border-radius: 10px;
+  margin-right: 20px;
 }
 
 .now-playing {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
-  background-color: #282828;
-  padding: 10px;
-  border-radius: 5px;
 }
 
-#album-cover {
-  width: 60px;
-  height: 60px;
-  margin-right: 10px;
-  border-radius: 5px;
+.album-cover-img {
+  height: 100px;
+  width: 100px;
+  border-radius: 10px;
+  margin-right: 20px;
 }
 
-.tracklist div {
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-radius: 5px;
+.track-details h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.player-controls button {
+  background-color: transparent;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s;
+  padding: 10px;
+  margin: 0 10px;
 }
 
-.tracklist div:hover {
-  background-color: #282828;
+.player-controls button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Tracklist Styles */
+.tracklist {
+  margin-top: 30px;
+}
+
+.track-item {
+  padding: 10px;
+  margin-bottom: 10px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
 }
