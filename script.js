@@ -7,6 +7,7 @@ const loginScreen = document.getElementById('login-screen');
 let accessToken = '';
 let currentTrackIndex = 0;
 let currentPlaylistTracks = [];
+let audioPlayer = new Audio();
 
 // Spotify Login Handler
 loginButton.addEventListener('click', () => {
@@ -95,7 +96,7 @@ function loadPlaylistTracks(playlistId, coverUrl, playlistName) {
       });
 
       if (data.items.length > 0) {
-        loadTrack(data.items[0].track, 0);
+        loadTrack(data.items[0].track, 0); // Autoplay the first track
       }
     })
     .catch(error => handleError(error));
@@ -107,11 +108,18 @@ function loadTrack(track, index) {
   document.getElementById('album-cover').src = track.album.images[0]?.url || 'default-cover.jpg';
   document.getElementById('track-name').textContent = track.name;
   document.getElementById('artist-names').textContent = track.artists.map(artist => artist.name).join(', ');
+
+  // Play the selected track
+  audioPlayer.src = track.preview_url || track.album.tracks.items[0].preview_url;  // If there's no preview_url, provide fallback for actual playback.
+  audioPlayer.play();
+  audioPlayer.onended = nextTrack;  // Move to the next track when current one ends
 }
 
 // Player Controls
 document.getElementById('next-button').addEventListener('click', nextTrack);
 document.getElementById('previous-button').addEventListener('click', previousTrack);
+document.getElementById('pause-button').addEventListener('click', pauseTrack);
+document.getElementById('play-button').addEventListener('click', playTrack);
 
 function nextTrack() {
   if (currentTrackIndex < currentPlaylistTracks.length - 1) {
@@ -122,6 +130,16 @@ function nextTrack() {
 function previousTrack() {
   if (currentTrackIndex > 0) {
     loadTrack(currentPlaylistTracks[--currentTrackIndex].track, currentTrackIndex);
+  }
+}
+
+function pauseTrack() {
+  audioPlayer.pause();
+}
+
+function playTrack() {
+  if (audioPlayer.paused) {
+    audioPlayer.play();
   }
 }
 
