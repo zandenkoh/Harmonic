@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Harmonic</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Sign-in Screen -->
+  <div id="login-screen">
+    <h1>Welcome to Harmonic</h1>
+    <button id="login-button">Sign in with Spotify</button>
+  </div>
+
+  <!-- Main Screen -->
+  <div id="main-screen" class="hidden">
+    <!-- Music Player -->
+    <div id="player">
+      <img id="album-cover" src="placeholder.jpg" alt="Album Cover">
+      <div id="track-info">
+        <h2 id="album-title">Album Title</h2>
+        <p id="track-name">Track Name</p>
+        <p id="artist-names">Artist Names</p>
+        <div id="controls">
+          <button id="prev-button">⏮️</button>
+          <button id="play-button">⏸️</button>
+          <button id="next-button">⏭️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Playlist Carousel -->
+    <div id="playlist-carousel"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
