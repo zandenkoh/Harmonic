@@ -9,59 +9,66 @@
 </head>
 <body>
   <!-- Login Screen -->
-  <div id="login-screen">
-    <h1>Welcome to Harmonic</h1>
-    <button id="login-button">Sign in with Spotify</button>
+  <div id="login-screen" class="screen">
+    <header class="header">
+      <h1>Welcome to Harmonic</h1>
+      <p>Sign in to your Spotify account to get started.</p>
+      <button id="login-button" class="btn">Sign in with Spotify</button>
+    </header>
   </div>
 
   <!-- Main Screen -->
-  <div id="main-screen" class="hidden">
+  <div id="main-screen" class="screen hidden">
     <!-- Sidebar -->
-    <div class="sidebar">
+    <nav class="sidebar">
       <h2>Your Playlists</h2>
-      <div id="playlist-carousel" class="playlist-list"></div>
-    </div>
+      <div id="playlist-carousel" class="playlist-list">
+        <!-- Dynamic playlist items will be loaded here -->
+      </div>
+    </nav>
 
     <!-- Main Content -->
-    <div class="main-content">
+    <main class="main-content">
       <!-- Playlist Header -->
-      <div class="playlist-header">
-        <img id="playlist-cover" src="" alt="Playlist Cover" class="playlist-cover-img">
-        <h2 id="playlist-name"></h2>
-      </div>
+      <section class="playlist-header">
+        <img id="playlist-cover" src="" alt="Playlist Cover" class="playlist-cover-img lazyload">
+        <h2 id="playlist-name">Playlist Name</h2>
+      </section>
 
       <!-- Now Playing Section -->
-      <div class="now-playing">
-        <img id="album-cover" src="" alt="Album Cover" class="album-cover-img">
+      <section class="now-playing">
+        <img id="album-cover" src="" alt="Album Cover" class="album-cover-img lazyload">
         <div class="track-details">
-          <h3 id="track-name"></h3>
-          <p id="artist-names"></p>
+          <h3 id="track-name">Track Name</h3>
+          <p id="artist-names">Artist Name</p>
         </div>
         <!-- Player Controls -->
         <div class="player-controls">
-          <button id="previous-button">
+          <button id="previous-button" class="control-button" aria-label="Previous">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 20l-6-6h12l-6 6z" />
               <path d="M10 0L4 6h12L10 0z" />
             </svg>
           </button>
-          <button id="play-pause-button">
+          <button id="play-pause-button" class="control-button" aria-label="Play/Pause">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
               <path d="M5 3v14l11-7L5 3z" />
             </svg>
           </button>
-          <button id="next-button">
+          <button id="next-button" class="control-button" aria-label="Next">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
               <path d="M10 0l6 6H4l6-6z" />
               <path d="M10 20l6-6H4l6 6z" />
             </svg>
           </button>
         </div>
-      </div>
+      </section>
 
       <!-- Tracklist Section -->
-      <div id="tracklist" class="tracklist"></div>
-    </div>
+      <section id="tracklist" class="tracklist">
+        <!-- Dynamic track list will be loaded here -->
+      </section>
+    </main>
   </div>
 
   <script src="script.js"></script>
