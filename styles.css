@@ -1,132 +1,116 @@
-const clientId = '2ee584ca1e9b4cddbe6af449527bd950';
-const redirectUri = 'https://zandenkoh.github.io/Harmonic/';
-const loginButton = document.getElementById('login-button');
-const mainScreen = document.getElementById('main-screen');
-const loginScreen = document.getElementById('login-screen');
-
-let accessToken = '';
-let currentTrackIndex = 0;
-let currentPlaylistTracks = [];
-
-// Spotify Login Handler
-loginButton.addEventListener('click', () => {
-  const scope = 'user-read-private playlist-read-private';
-  const authUrl = `https://accounts.spotify.com/authorize?client_id=${clientId}&response_type=token&redirect_uri=${redirectUri}&scope=${scope}`;
-  window.location.href = authUrl;
-});
-
-// Handle Redirect and Extract Token
-if (window.location.hash) {
-  const hash = window.location.hash.substring(1).split('&');
-  const params = {};
-  hash.forEach(h => {
-    const [key, value] = h.split('=');
-    params[key] = value;
-  });
-
-  accessToken = params.access_token;
-  if (accessToken) {
-    loginScreen.classList.add('hidden');
-    mainScreen.classList.remove('hidden');
-    loadPlaylists();
-  }
+body {
+  font-family: 'Helvetica Neue', sans-serif;
+  margin: 0;
+  background-color: #121212;
+  color: #ffffff;
+  display: flex;
+  height: 100vh;
 }
 
-// Load Playlists with Pagination
-function loadPlaylists(url = 'https://api.spotify.com/v1/me/playlists') {
-  fetch(url, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  })
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to fetch playlists');
-      return response.json();
-    })
-    .then(data => {
-      const playlistCarousel = document.getElementById('playlist-carousel');
-      data.items.forEach(playlist => addPlaylistToSidebar(playlist));
-
-      if (data.next) {
-        loadPlaylists(data.next); // Load next batch of playlists
-      }
-    })
-    .catch(error => handleError(error));
+#login-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #1db954;
 }
 
-// Add Playlist to Sidebar
-function addPlaylistToSidebar(playlist) {
-  const playlistDiv = document.createElement('div');
-  const img = document.createElement('img');
-  img.src = playlist.images[0]?.url || 'default-cover.jpg';
-  const span = document.createElement('span');
-  span.textContent = playlist.name;
-
-  playlistDiv.appendChild(img);
-  playlistDiv.appendChild(span);
-  playlistDiv.classList.add('playlist-item');
-
-  playlistDiv.addEventListener('click', () => loadPlaylistTracks(playlist.id, playlist.images[0]?.url, playlist.name));
-  document.getElementById('playlist-carousel').appendChild(playlistDiv);
+#login-screen h1 {
+  font-size: 2rem;
+  margin-bottom: 20px;
 }
 
-// Load Tracks from Selected Playlist
-function loadPlaylistTracks(playlistId, coverUrl, playlistName) {
-  document.getElementById('playlist-cover').src = coverUrl || 'default-cover.jpg';
-  document.getElementById('playlist-name').textContent = playlistName;
-
-  fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-    headers: { Authorization: `Bearer ${accessToken}` }
-  })
-    .then(response => {
-      if (!response.ok) throw new Error('Failed to fetch tracks');
-      return response.json();
-    })
-    .then(data => {
-      const tracklist = document.getElementById('tracklist');
-      tracklist.innerHTML = '';
-      currentPlaylistTracks = data.items;
-
-      data.items.forEach((item, index) => {
-        const trackDiv = document.createElement('div');
-        trackDiv.textContent = item.track.name;
-        trackDiv.classList.add('track-item');
-
-        trackDiv.addEventListener('click', () => loadTrack(item.track, index));
-        tracklist.appendChild(trackDiv);
-      });
-
-      if (data.items.length > 0) {
-        loadTrack(data.items[0].track, 0);
-      }
-    })
-    .catch(error => handleError(error));
+#login-button {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  color: #fff;
+  background-color: #191414;
+  cursor: pointer;
 }
 
-// Load Selected Track
-function loadTrack(track, index) {
-  currentTrackIndex = index;
-  document.getElementById('album-cover').src = track.album.images[0]?.url || 'default-cover.jpg';
-  document.getElementById('track-name').textContent = track.name;
-  document.getElementById('artist-names').textContent = track.artists.map(artist => artist.name).join(', ');
+.sidebar {
+  width: 250px;
+  background-color: #191414;
+  padding: 20px;
+  overflow-y: auto;
 }
 
-// Player Controls
-document.getElementById('next-button').addEventListener('click', nextTrack);
-document.getElementById('previous-button').addEventListener('click', previousTrack);
-
-function nextTrack() {
-  if (currentTrackIndex < currentPlaylistTracks.length - 1) {
-    loadTrack(currentPlaylistTracks[++currentTrackIndex].track, currentTrackIndex);
-  }
+.sidebar h2 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
-function previousTrack() {
-  if (currentTrackIndex > 0) {
-    loadTrack(currentPlaylistTracks[--currentTrackIndex].track, currentTrackIndex);
-  }
+.playlist-list div {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-// Error Handler
-function handleError(error) {
-  console.error('Error:', error);
-  alert('Something went wrong. Please try again.');
+.playlist-list div:hover {
+  background-color: #282828;
+}
+
+.playlist-list img {
+  width: 50px;
+  height: 50px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.playlist-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#playlist-cover {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+#playlist-name {
+  font-size: 1.5rem;
+}
+
+.now-playing {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: #282828;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+#album-cover {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.tracklist div {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.tracklist div:hover {
+  background-color: #282828;
 }
