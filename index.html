@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Harmonic</title>
   <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/heroicons@1.0.6"></script>
+  <title>Harmonic</title>
 </head>
 <body>
-  <!-- Sign-in Screen -->
+  <!-- Login Screen -->
   <div id="login-screen">
     <h1>Welcome to Harmonic</h1>
     <button id="login-button">Sign in with Spotify</button>
@@ -15,23 +16,52 @@
 
   <!-- Main Screen -->
   <div id="main-screen" class="hidden">
-    <!-- Music Player -->
-    <div id="player">
-      <img id="album-cover" src="placeholder.jpg" alt="Album Cover">
-      <div id="track-info">
-        <h2 id="album-title">Album Title</h2>
-        <p id="track-name">Track Name</p>
-        <p id="artist-names">Artist Names</p>
-        <div id="controls">
-          <button id="prev-button">⏮️</button>
-          <button id="play-button">⏸️</button>
-          <button id="next-button">⏭️</button>
-        </div>
-      </div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Your Playlists</h2>
+      <div id="playlist-carousel" class="playlist-list"></div>
     </div>
 
-    <!-- Playlist Carousel -->
-    <div id="playlist-carousel"></div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Playlist Header -->
+      <div class="playlist-header">
+        <img id="playlist-cover" src="" alt="Playlist Cover" class="playlist-cover-img">
+        <h2 id="playlist-name"></h2>
+      </div>
+
+      <!-- Now Playing Section -->
+      <div class="now-playing">
+        <img id="album-cover" src="" alt="Album Cover" class="album-cover-img">
+        <div class="track-details">
+          <h3 id="track-name"></h3>
+          <p id="artist-names"></p>
+        </div>
+        <!-- Player Controls -->
+        <div class="player-controls">
+          <button id="previous-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 20l-6-6h12l-6 6z" />
+              <path d="M10 0L4 6h12L10 0z" />
+            </svg>
+          </button>
+          <button id="play-pause-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M5 3v14l11-7L5 3z" />
+            </svg>
+          </button>
+          <button id="next-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" viewBox="0 0 20 20" fill="currentColor">
+              <path d="M10 0l6 6H4l6-6z" />
+              <path d="M10 20l6-6H4l6 6z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Tracklist Section -->
+      <div id="tracklist" class="tracklist"></div>
+    </div>
   </div>
 
   <script src="script.js"></script>
